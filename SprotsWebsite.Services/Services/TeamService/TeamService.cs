@@ -131,7 +131,7 @@ namespace SprotsWebsite.Services
                     CreatedAt = s.CreatedAt
                 })
                 .OrderByDescending(x => x.CreatedAt)
-                .Take(num)
+                .Take(numberOfTeams)
                 .ToListAsync();
             return new GetTeamsResponseDto(teams);
         }
