@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SprotsWebsite.Services\SprotsWebsite.Services.csproj" />
+    <ProjectReference Include="..\SportsWebsite.Services\SportsWebsite.Services.csproj" />
   </ItemGroup>
 
 </Project>
