@@ -1,0 +1,47 @@
+﻿@using SprotsWebsite.Services.Dtos;
+@model AddTeamRequestDto;   
+@{
+    ViewData["Title"] = "Add Team";
+    Layout = "_Layout";
+ 
+}
+
+ <div class="card-body">
+     <div class="col-lg-12">
+         <div class="input-box">
+             <form id="AddForm" asp-controller="Team" asp-action="AddTeam" method="post" enctype="multipart/form-data">
+                 <div class="form-group">
+                     <label class="form-label-small">Team Name</label>
+                    <input type="text" asp-for="Name" class="form-control" id="AddTeamName" placeholder="Enter Team Name">
+                     <span asp-validation-for="Name" class="text-danger"></span>
+                 </div>
+                 <div class="form-group">
+                     <label class="form-label-small">Description</label>
+                    <input type="text" asp-for="Description" class="form-control" id="AddTeamDescription" placeholder="Enter Team Description">
+                     <span asp-validation-for="Description" class="text-danger"></span>
+                 </div>
+                 <div class="form-group">
+                     <label class="form-label-small">Team Website Url</label>
+                     <input type="url" asp-for="WebsiteURL" class="form-control" id="WebsiteURL" placeholder="Enter Team Website Url">
+                     <span asp-validation-for="WebsiteURL" class="text-danger"></span>
+                 </div>
+                 <div class="form-group">
+                     <label class="form-label-small">Team Foundation Date</label>
+                    <input type="date" asp-for="FoundationDate" class="form-control" id="FoundationDate" placeholder="Enter Team Foundation Date" >
+                     <span asp-validation-for="FoundationDate" class="text-danger"></span>
+                 </div>
+                 <div class="form-group">
+                     <label for="formFile" class="form-label"> Insert team logo </label>
+                     <input name="Logo" class="form-control" type="file" id="formFile" accept=".png" >
+                 </div>
+                 <button type="submit" class="btn btn-primary-inverse" id="AddBtn" style="background-color: darkslategray ; color : white">
+                     Add
+                 </button>
+             </form>
+         </div>
+     </div>
+ </div>
+<script>
+    var currentDate = new Date().toISOString().split('T')[0];
+    document.getElementById("FoundationDate").setAttribute("max", currentDate);
+</script>

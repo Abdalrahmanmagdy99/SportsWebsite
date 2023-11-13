@@ -1,0 +1,105 @@
+﻿@using SportsWebsite.ViewModels;
+@model GetPlayersListViewModel;
+@{
+    ViewData["Title"] = "Players Page";
+    Layout = "_Layout";
+}
+@if (User.Identity.IsAuthenticated)
+{ 
+    <a class="btn btn-primary-inverse" asp-action="AddPlayer" asp-controller="Player" method="get" style="background-color: darkslategray ; color : white; margin-bottom: 20px;">Add Player</a>
+}
+<div class="card card--has-table">
+    <table class="table" style="margin-bottom:0">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Team Name</th>
+                <th scope="col">Age</th>
+                @if (User.Identity.IsAuthenticated)
+                {
+                   <th scope="col"></th> 
+                }
+                
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Response.PlayersDetails.Count; i++)
+            {
+                <tr>
+                    <th scope="row">@(i + 1)</th>
+                    <td>@Model.Response.PlayersDetails[i].Name</td>
+                    <td>@Model.Response.PlayersDetails[i].TeamName</td>
+                    <td>@Model.Response.PlayersDetails[i].Age</td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <td class="game-player-result__score">
+                        <button style="border: none;background-color: transparent;color: #292c31;" data-toggle="modal" data-target="#Editpopup" onclick="EditPlayer(@Model.Response.PlayersDetails[i].PlayerId)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <a style="border: none;background-color: transparent;color: #292c31;" asp-controller="Player" asp-action="DeletePlayer" asp-route-id="@Model.Response.PlayersDetails[i].PlayerId" method="get">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                          </td>
+                    }
+                    
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="modal fade" id="Editpopup" tabindex="-1" role="dialog" aria-labelledby="ordersModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width:600px">
+            <div class="modal-content" id="modal-content">
+                <div class="modal-header">
+                    <h6>Update Team</h6>
+                    <hr>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin: -1rem -1rem -1rem;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="input-box">
+                                <form id="EditForm" asp-controller="Player" asp-action="UpdatePlayerInformation" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="PlayerId" id="PlayerId" />
+                                    <div class="form-group">
+                                        <label class="form-label-small">Player Name</label>
+                                        <input type="text" name="Name" class="form-control" id="EditPlayerName" placeholder="Enter Player Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Name" style="font-size: 16px;">Player Team</label>
+                                        <select asp-for="TeamId" id="TeamIdDropDown" class="form-control">
+                                            <option>Select Team...</option>
+                                            @foreach (var item in Model.Teams)
+                                            {
+                                                <option value="@item.TeamId"> @item.Name </option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="Teams" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label-small">Player BirthDate</label>
+                                        <input type="date" name="DateOfBirth" class="form-control" id="EditPlayerBirthDate" placeholder="Enter Player BirthDate">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary-inverse" id="AddBtn" style="background-color: darkslategray ; color : white">
+                                        Edit
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+@section Scripts
+    {
+    <script asp-append-version="true" defer src="~/js/Player.js"></script>
+}

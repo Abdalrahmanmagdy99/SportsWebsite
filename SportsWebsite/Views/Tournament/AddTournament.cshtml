@@ -1,0 +1,53 @@
+﻿@using SprotsWebsite.Services.Dtos;
+@model AddTournamentRequestDto;
+@{
+    ViewData["Title"] = "Add Tournament";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+<div class="card-body">
+     <div class="col-lg-12">
+         <div class="input-box">
+             <form id="AddForm" asp-controller="Tournament" asp-action="AddTournament" method="post" enctype="multipart/form-data">
+                 <div class="form-group">
+                     <label class="form-label-small">Tournament Name</label>
+                    <input type="text" asp-for="Name" class="form-control" id="AddTournamentName" placeholder="Enter Tournament Name">
+                     <span asp-validation-for="Name" class="text-danger"></span>
+                 </div>
+                 <div class="form-group">
+                     <label class="form-label-small">Description</label>
+                    <input type="text" asp-for="Description" class="form-control" id="AddTournamentDescription" placeholder="Enter Tournament Description">
+                     <span asp-validation-for="Description" class="text-danger"></span>
+                 </div>
+                <div class="form-group">
+                    <label class="form-label-small">Tournament Video Url</label>
+                    <input type="text" asp-for="VideoUrl" class="form-control" id="AddTournamentVideoUrl" placeholder="Enter Tournament Video Url">
+                    <span asp-validation-for="VideoUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SelectedTeamsIds" style="font-size: 16px;">Teams</label>
+                    <select asp-for="SelectedTeamsIds" id="Teams" class="form-control chosen-select">
+                        <option value="0">Select Team...</option>
+                        @foreach (var item in Model.Teams)
+                        {
+                            <option value=@item.TeamId> @item.Name </option>
+                        }
+                    </select>
+                    <span asp-validation-for="Teams" class="text-danger"></span>
+                </div>
+                 <div class="form-group">
+                     <label for="formFile" class="form-label"> Insert Tournament logo </label>
+                     <input name="Logo" class="form-control" type="file" id="formFile" accept=".png" >
+                 </div>
+                 <button type="submit" class="btn btn-primary-inverse" id="AddBtn" style="background-color: darkslategray ; color : white">
+                     Add
+                 </button>
+             </form>
+         </div>
+     </div>
+ </div>
+ <script>
+     $('.chosen-select').chosen();    
+ </script>

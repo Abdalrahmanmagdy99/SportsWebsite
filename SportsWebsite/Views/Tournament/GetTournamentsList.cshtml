@@ -1,0 +1,128 @@
+﻿@using SportsWebsite.ViewModels;
+@model GetTournamentsViewModel;
+@{
+    ViewData["Title"] = "Tournaments Page";
+    Layout = "_Layout";
+    string URL = "";
+}
+@if (User.Identity.IsAuthenticated)
+{
+    <a class="btn btn-primary-inverse" asp-action="AddTournament" asp-controller="Tournament" method="get" style="background-color: darkslategray ; color : white; margin-bottom: 20px;">Add Tournament</a>
+
+}
+<div class="card card--has-table">
+    <table class="table" style="margin-bottom:0">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Logo</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Number Of Teams</th>
+                <th scope="col">Video</th>
+                <th scope="col"></th>
+                @if (User.Identity.IsAuthenticated)
+                {
+                      <th scope="col"></th>
+                }
+              
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Response.TournamentsDetails.Count; i++)
+            {
+                URL = @Model.Response.TournamentsDetails[i].VideoUrl;
+                <tr>
+                    <th scope="row">@(i + 1)</th>
+                    <td><img src="~/images/@Model.Response.TournamentsDetails[i].ImagePath" style="width:30px" /></td>
+                    <td>@Model.Response.TournamentsDetails[i].Name</td>
+                    <td>@Model.Response.TournamentsDetails[i].Description</td>
+                    <td>@Model.Response.TournamentsDetails[i].NumberOfTeams</td>
+                    <td>
+                        <button style="border: none;background-color: gray ; color : white" data-toggle="modal" data-target="#Videopopup">Watch Video</button>
+                    </td>
+                    <td><a asp-controller="Tournament" asp-action="GetTournamentTeams" asp-route-id="@Model.Response.TournamentsDetails[i].TournamentId" method ="post">Show Teams</a></td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <td class="game-player-result__score">
+                        <button style="border: none;background-color: transparent;color: #292c31;"data-toggle="modal" data-target="#Editpopup" onclick="EditTournament(@Model.Response.TournamentsDetails[i].TournamentId)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <a style="border: none;background-color: transparent;color: #292c31;" asp-controller="Tournament" asp-action="DeleteTournament" asp-route-id="@Model.Response.TournamentsDetails[i].TournamentId" method="get">
+                            <i class="fas fa-trash"></i>
+                         </a>
+                         </td>
+                    }
+                    
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="Videopopup" tabindex="-1" role="dialog" aria-labelledby="ordersModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width:600px">
+        <div class="modal-content" id="modal-content">
+            <div class="modal-header">
+                <h6>Tournament Video</h6>
+                <hr>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin: -1rem -1rem -1rem;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <iframe width="420" height="315" src="@URL" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Editpopup" tabindex="-1" role="dialog" aria-labelledby="ordersModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width:600px">
+        <div class="modal-content" id="modal-content">
+            <div class="modal-header">
+                <h6>Update Team</h6>
+                <hr>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin: -1rem -1rem -1rem;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <div class="card-body">
+                    <div class="col-lg-12">
+                        <div class="input-box">
+                            <form id="EditForm" asp-controller="Tournament" asp-action="UpdateTournamentInformation" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="TournamentId" id="TournamentId" />
+                                <div class="form-group">
+                                    <label class="form-label-small">Tournament Name</label>
+                                    <input type="text" name="Name" class="form-control" id="EditTournamentName" placeholder="Enter Tournament Name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label-small">Description</label>
+                                    <input type="text" name="Description" class="form-control" id="EditTournamentDescription" placeholder="Enter Team Description">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label-small">Tournament Video Url</label>
+                                    <input type="text" name="VideoUrl" class="form-control" id="EditTournamentVideoUrl" placeholder="Enter Tournament Video Url">
+                                </div>
+                                <div class="form-group">
+                                    <label for="formFile" class="form-label"> Insert Tournament logo </label>
+                                    <input name="Logo" class="form-control" type="file" id="formFile" accept=".png">
+                                </div>
+                                <button type="submit" class="btn btn-primary-inverse" id="AddBtn" style="background-color: darkslategray ; color : white">
+                                    Edit
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script asp-append-version="true" defer src="~/js/Tournament.js"></script>
+}

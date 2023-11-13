@@ -1,0 +1,108 @@
+﻿@using SportsWebsite.ViewModels;
+@model GetTeamsViewModel;
+@{
+    ViewData["Title"] = "Teams Page";
+    Layout = "_Layout";
+}
+@if (User.Identity.IsAuthenticated)
+{
+    <a class="btn btn-primary-inverse" href="/Team/AddTeam" style="background-color: darkslategray ; color : white; margin-bottom: 20px;">Add Team</a>
+}
+<div class="card card--has-table">
+    <table class="table" style="margin-bottom:0">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Logo</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Foundation Date</th>
+                <th scope="col">Website URL</th>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <th scope="col"></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Response.TeamsDetails.Count; i++)
+            {
+                <tr>
+                    <th scope="row">@(i + 1)</th>
+                    <td><img src="~/images/@Model.Response.TeamsDetails[i].ImageName" style="width:30px" /></td>
+                    <td>@Model.Response.TeamsDetails[i].Name</td>
+                    <td>@Model.Response.TeamsDetails[i].Description</td>
+                    <td>@Model.Response.TeamsDetails[i].FoundationDate.ToString("dd/MM/yyyy")</td>
+                    <td>@Model.Response.TeamsDetails[i].WebsiteURL</td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <td class="game-player-result__score">
+                            <button style="border: none;background-color: transparent;color: #292c31;" data-toggle="modal" data-target="#Editpopup" onclick="EditTeam(@Model.Response.TeamsDetails[i].TeamId)">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <a style="border: none;background-color: transparent;color: #292c31;" asp-controller="Team" asp-action="DeleteTeam" asp-route-id="@Model.Response.TeamsDetails[i].TeamId" method="get">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="Editpopup" tabindex="-1" role="dialog" aria-labelledby="ordersModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width:600px">
+        <div class="modal-content" id="modal-content">
+            <div class="modal-header">
+                <h6>Update Team</h6>
+                <hr>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin: -1rem -1rem -1rem;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <div class="card-body">
+                    <div class="col-lg-12">
+                        <div class="input-box">
+                            <form id="EditForm" asp-controller="Team" asp-action="UpdateTeamInformation" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="TeamId" id="TeamId" />
+                                <div class="form-group">
+                                    <label class="form-label-small" >Team Name</label>
+                                    <input type="text" name="Name" class="form-control" id="EditTeamName" placeholder="Enter Team Name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label-small" >Description</label>
+                                    <input type="text" name="Description" class="form-control" id="EditTeamDescription" placeholder="Enter Team Description">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label-small" >Team Website Url</label>
+                                    <input type="text" name="WebsiteUrl" class="form-control" id="EditWebsiteUrl" placeholder="Enter Website Url">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label-small" >Team Foundation Date</label>
+                                    <input type="date" name="FoundationDate" class="form-control" id="EditFoundationDate" placeholder="Enter Foundation Date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="formFile" class="form-label"> change team logo </label>
+                                    <input name="Logo" class="form-control" type="file" id="formFile" accept=".png">
+                                </div>
+                                <button type="submit" class="btn btn-primary-inverse" id="AddBtn" style="background-color: darkslategray ; color : white">
+                                    Edit
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var currentDate = new Date().toISOString().split('T')[0];
+    document.getElementById("EditFoundationDate").setAttribute("max", currentDate);
+</script>
+@section Scripts
+{
+    <script asp-append-version="true" defer src="~/js/Team.js"></script>
+}
