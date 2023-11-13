@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SprotsWebsite.Services.Helpers
 {
-    public class HtmlHelper : IHtmlHelper
+    public static class HtmlHelper 
     {
-       public string GetIframeSrc(string url)
+       public static string GetIframeSrc(string url)
        {
             
             var htmlDocument = new HtmlDocument();

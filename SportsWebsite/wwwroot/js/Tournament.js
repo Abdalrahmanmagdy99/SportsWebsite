@@ -8,7 +8,7 @@
         {
             type: 'Get',
             dataType: 'json',
-            url: '/api/Tournament/GetTournamentDetailsById',
+            url: 'https://localhost:7251/api/Tournament/GetTournamentDetailsById',
             data: { id: id },
             success: function (success) {
                 TournamentId.value = success.tournamentId;
@@ -20,7 +20,11 @@
     );
 }
 
+function PutVideoUrl(VideoURL) {
+    var myIframe = document.getElementById('Iframe');
 
+    myIframe.src = VideoURL;
+}
 
 
 

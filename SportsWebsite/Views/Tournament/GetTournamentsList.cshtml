@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Tournaments Page";
     Layout = "_Layout";
-    string URL = "";
 }
 @if (User.Identity.IsAuthenticated)
 {
@@ -31,7 +30,6 @@
         <tbody>
             @for (int i = 0; i < Model.Response.TournamentsDetails.Count; i++)
             {
-                URL = @Model.Response.TournamentsDetails[i].VideoUrl;
                 <tr>
                     <th scope="row">@(i + 1)</th>
                     <td><img src="~/images/@Model.Response.TournamentsDetails[i].ImagePath" style="width:30px" /></td>
@@ -39,7 +37,7 @@
                     <td>@Model.Response.TournamentsDetails[i].Description</td>
                     <td>@Model.Response.TournamentsDetails[i].NumberOfTeams</td>
                     <td>
-                        <button style="border: none;background-color: gray ; color : white" data-toggle="modal" data-target="#Videopopup">Watch Video</button>
+                        <button style="border: none;background-color: gray ; color : white" data-toggle="modal" data-target="#Videopopup" onclick="PutVideoUrl('@Model.Response.TournamentsDetails[i].VideoUrl')">Watch Video</button>
                     </td>
                     <td><a asp-controller="Tournament" asp-action="GetTournamentTeams" asp-route-id="@Model.Response.TournamentsDetails[i].TournamentId" method ="post">Show Teams</a></td>
                     @if (User.Identity.IsAuthenticated)
@@ -70,8 +68,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            
             <div class="modal-body" id="modal-body">
-                <iframe width="420" height="315" src="@URL" frameborder="0" allowfullscreen></iframe>
+                <iframe id="Iframe" width="420" height="315" src="" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
     </div>

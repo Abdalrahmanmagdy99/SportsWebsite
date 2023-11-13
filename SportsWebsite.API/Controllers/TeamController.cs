@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using SprotsWebsite.Services;
 using SprotsWebsite.Services.Dtos;
 
-namespace SportsWebsite.Controllers.Api
-{
+namespace SportsWebsite.API.Controllers
+{ 
     [Route("api/[controller]")]
     [ApiController]
     public class TeamController : ControllerBase

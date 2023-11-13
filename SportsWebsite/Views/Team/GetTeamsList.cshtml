@@ -32,8 +32,8 @@
                     <td><img src="~/images/@Model.Response.TeamsDetails[i].ImageName" style="width:30px" /></td>
                     <td>@Model.Response.TeamsDetails[i].Name</td>
                     <td>@Model.Response.TeamsDetails[i].Description</td>
-                    <td>@Model.Response.TeamsDetails[i].FoundationDate.ToString("dd/MM/yyyy")</td>
-                    <td>@Model.Response.TeamsDetails[i].WebsiteURL</td>
+                    <td>@Model.Response.TeamsDetails[i].FoundationDate.Year</td>
+                    <td><a href="@Model.Response.TeamsDetails[i].WebsiteURL">Team Website</a></td>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <td class="game-player-result__score">

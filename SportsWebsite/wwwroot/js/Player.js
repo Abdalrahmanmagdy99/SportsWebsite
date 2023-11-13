@@ -8,7 +8,7 @@
         {
             type: 'Get',
             dataType: 'json',
-            url: '/api/Player/GetPlayerDetailsById',
+            url: 'https://localhost:7251/api/Player/GetPlayerDetailsById',
             data: { id: id },
             success: function (success) {
                 PlayerId.value = success.playerId;

@@ -10,13 +10,12 @@ namespace SprotsWebsite.Services
     {
         private readonly IImageService _imageService;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IHtmlHelper _htmlHelper;
 
-        public TournamentService(IImageService imageService,IUnitOfWork unitOfWork, IHtmlHelper htmlHelper)
+
+        public TournamentService(IImageService imageService,IUnitOfWork unitOfWork)
         {
             _imageService = imageService;
             _unitOfWork = unitOfWork;
-            _htmlHelper = htmlHelper;
         }
 
         public async Task<bool> AddTournament(AddTournamentRequestDto addTournamentRequestDto)
@@ -28,7 +27,7 @@ namespace SprotsWebsite.Services
                 Description = addTournamentRequestDto.Description,
                 Name = addTournamentRequestDto.Name,
                 ImageId = imageId,
-                VideoUrl = _htmlHelper.GetIframeSrc(addTournamentRequestDto.VideoUrl),
+                VideoUrl = HtmlHelper.GetIframeSrc(addTournamentRequestDto.VideoUrl),
             };
             await _unitOfWork.TournamentRepository.InsertAsync(tournament);
             await _unitOfWork.SaveChangesAsync();
@@ -66,7 +65,7 @@ namespace SprotsWebsite.Services
                 tournament.Name = updateTournamentRequestDto.Name;
 
             if (!String.IsNullOrEmpty(updateTournamentRequestDto.VideoUrl))
-                tournament.VideoUrl = _htmlHelper.GetIframeSrc(updateTournamentRequestDto.VideoUrl);
+                tournament.VideoUrl = HtmlHelper.GetIframeSrc(updateTournamentRequestDto.VideoUrl);
 
             if (!String.IsNullOrEmpty(updateTournamentRequestDto.Description))
                 tournament.Description = updateTournamentRequestDto.Description;

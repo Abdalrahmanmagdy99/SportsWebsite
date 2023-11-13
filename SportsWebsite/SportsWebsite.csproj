@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SportsWebsite.Data1\SportsWebsite.Domain.csproj" />
+    <ProjectReference Include="..\SportsWebsite.Domain\SportsWebsite.Domain.csproj" />
     <ProjectReference Include="..\SprotsWebsite.Services\SprotsWebsite.Services.csproj" />
   </ItemGroup>
 

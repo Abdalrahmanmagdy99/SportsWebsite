@@ -9,7 +9,7 @@
         {
             type: 'Get',
             dataType: 'json',
-            url: '/api/Team/GetTeamDetailsById',
+            url: 'https://localhost:7251/api/Team/GetTeamDetailsById',
             data: { id: id },
             success: function (success) {
                 TeamId.value = success.teamId;
