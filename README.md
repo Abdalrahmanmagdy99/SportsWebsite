@@ -15,8 +15,7 @@ Before running the website, ensure you have the following installed on your syst
 Follow these steps to get the website up and running:
 
 1. **Clone The Repository**:  
-   Clone the repository from GitHub using the following link:  
-   [GitHub Repository](https://github.com/Abdalrahmanmagdy99/SportsWebsite)
+   Clone the repository 
 
 2. **Update the Database**:  
    Open the Package Manager Console in Visual Studio, set the Domain Layer as the default project, and run the following command:  
