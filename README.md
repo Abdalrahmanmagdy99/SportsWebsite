@@ -18,7 +18,7 @@ Follow these steps to get the website up and running:
    Clone the repository 
 
 2. **Update the Database**:  
-   Open the Package Manager Console in Visual Studio, set the Domain Layer as the default project, and run the following command:  
+   Open the Package Manager Console in Visual Studio, set the Domain Layer as the default project, and run the following command:  Update-Database
 
 3. **Run The API Project**:  
 Start the API project by setting it as the startup project and running it.
