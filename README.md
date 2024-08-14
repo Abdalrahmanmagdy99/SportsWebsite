@@ -42,6 +42,5 @@ Use the following credentials to log in:
 - **Post-First Run**: Remember to comment out the `PopulateData();` function after the first run.
 - **Login Requirement**: You must be logged in to perform Add, Update, and Delete operations.
 - **Logo Format**: Ensure the logo file is in `.png` format.
-- **Embedding Videos**: When adding videos, use the `iframe` tag as shown in the documentation.
 
 
